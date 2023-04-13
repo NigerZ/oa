@@ -3,18 +3,18 @@
 <mapper namespace="org.example.mapper.ProcessMapper">
 
     <select id="index" resultType="org.example.vo.process.ProcessVo">
-        SELECT op.process_code as op.process_code,
-            op.title as title,
-            su.name as name,
-            opy.name as process_type_name,
-            opt.name as process_template_name,
-            op.description as description,
-            op.status as status,
-            op.create_time as create_time
-        FROM oa_process as op
-        left join sys_user as su on op.user_id = su.id
-        left join oa_process_template opt on op.process_template_id = opt.id
-        left join oa_process_type opy on op.process_type_id = opy.id
+        SELECT op.process_code AS op.process_code,
+            op.title AS title,
+            su.name AS name,
+            opy.name AS process_type_name,
+            opt.name AS process_template_name,
+            op.description AS description,
+            op.status AS status,
+            op.create_time AS create_time
+        FROM oa_process AS op
+        LEFT JOIN sys_user AS su on op.user_id = su.id
+        LEFT JOIN oa_process_template AS opt on op.process_template_id = opt.id
+        LEFT JOIN oa_process_type AS opy on op.process_type_id = opy.id
         <where>
             <if test="vo.keyword!=null and vo.keyword!=''">
                 and (
@@ -36,5 +36,13 @@
         </where>
 
 
+    </select>
+    <select id="getPage" resultType="org.example.vo.process.ProcessVo">
+        SELECT * FROM oa_process
+        <where>
+            <if test="processQueryVo.userId != null  and processQueryVo.userId != ''">
+                AND user_id = #{processQueryVo.userId}
+            </if>
+        </where>
     </select>
 </mapper>

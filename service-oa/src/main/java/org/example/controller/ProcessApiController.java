@@ -1,5 +1,7 @@
 package org.example.controller;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.example.model.process.ProcessTemplate;
@@ -9,10 +11,12 @@ import org.example.service.ProcessTemplateService;
 import org.example.service.ProcessTypeService;
 import org.example.vo.process.ProcessFormVo;
 import org.example.vo.process.ProcessTypeVO;
+import org.example.vo.process.ProcessVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @Api(tags = "审批流管理")
 @RestController
@@ -52,5 +56,29 @@ public class ProcessApiController {
     {
         processService.startUp(processFormVo);
         return Result.ok();
+    }
+
+    @ApiOperation(value = "待处理")
+    @GetMapping("/findPending/{page}/{limit}")
+    public Result findPending(@PathVariable Long page, @PathVariable Long limit) {
+        IPage<ProcessVo> pageParam = new Page<>(page, limit);
+        IPage<ProcessVo> result = processService.findPending(pageParam);
+        return Result.ok(result);
+    }
+
+
+    @ApiOperation(value = "已发起")
+    @GetMapping("/findStarted/{page}/{limit}")
+    public Result findStarted(@PathVariable Long page, @PathVariable Long limit) {
+        IPage<ProcessVo> pageParam = new Page<>(page, limit);
+        IPage<ProcessVo> result = processService.findStarted(pageParam);
+        return Result.ok(result);
+    }
+
+    @ApiOperation(value = "获取审批详情")
+    @GetMapping("show/{id}")
+    public Result show(@PathVariable Long id) {
+        Map<String, Object> result = processService.show(id);
+        return Result.ok(result);
     }
 }

@@ -6,11 +6,13 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+import lombok.experimental.Accessors;
 import org.example.model.base.BaseEntity;
 
 @Data
 @ApiModel(description = "ProcessRecord")
 @TableName("oa_process_record")
+@Accessors(chain = true)
 public class ProcessRecord extends BaseEntity {
 
 	private static final long serialVersionUID = 1L;

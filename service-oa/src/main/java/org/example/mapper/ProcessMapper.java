@@ -16,4 +16,12 @@ public interface ProcessMapper extends BaseMapper<Process> {
      * @return
      */
     IPage<ProcessVo> index(IPage<ProcessVo> pageParam, @Param("vo") ProcessQueryVo processQueryVo);
+
+    /**
+     * 获取已经发起流程的流程
+     * @param pageParam
+     * @param processQueryVo
+     * @return
+     */
+    IPage<ProcessVo> getPage(IPage<ProcessVo> pageParam, @Param("processQueryVo") ProcessQueryVo processQueryVo);
 }

@@ -2,4 +2,10 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="org.example.mapper.ProcessRecordMapper">
 
+    <select id="getByProcessId" resultType="org.example.model.process.ProcessRecord">
+        SELECT * FROM oa_process_record
+        <where>
+            AND process_id = #{processId}
+        </where>
+    </select>
 </mapper>
